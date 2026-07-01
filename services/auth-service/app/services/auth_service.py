@@ -15,7 +15,7 @@ from app.tasks import send_welcome_email, send_verification_email, send_reset_pa
 from app.core.otp import generate_otp
 from app.core.redis_otp import save_otp, get_otp, delete_otp
 from app.schemas.password import ResetPasswordRequest
-
+#work
 class AuthService:
     @staticmethod
     def register_user(db :Session, request :RegisterRequest):
