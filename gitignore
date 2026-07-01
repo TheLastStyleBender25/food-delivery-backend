@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+
+# Virtual environments
+.venv/
+venv/
+
+# Environment files
+.env
+.env.local
+.env.prod
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Docker volumes
+postgres_data/
+redis_data/
+rabbitmq_data/
+
+# OS files
+.DS_Store
+Thumbs.db
