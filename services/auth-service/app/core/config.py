@@ -25,6 +25,8 @@ class Settings(BaseSettings):  # Inherits BaseSettings — auto-reads values fro
     RABBITMQ_HOST : str
     RABBITMQ_PORT : int
 
+    BASE_URL : str
+
     EMAIL_VERIFICATION_EXPIRE_HOURS: int
 
     OTP_EXPIRATION_SECONDS:int
