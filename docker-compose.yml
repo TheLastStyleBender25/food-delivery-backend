@@ -2,6 +2,7 @@ services:
 
   postgres:
     image: postgres:17
+    restart: unless-stopped
 
     environment:
       POSTGRES_DB: auth_db
@@ -16,12 +17,14 @@ services:
   
   redis:
     image: redis:8-alpine
+    restart: unless-stopped
 
     ports:
       - "6379:6379"
 
   rabbitmq:
     image: rabbitmq:3.13-management
+    restart: unless-stopped
 
     ports:
       - "5672:5672"
@@ -30,6 +33,7 @@ services:
   auth-service:
     build:
       context: ./services/auth-service
+    restart: unless-stopped
 
     env_file:
     - ./services/auth-service/.env
@@ -40,10 +44,17 @@ services:
 
     depends_on:
       - postgres
+      - redis
+      - rabbitmq
 
   celery-worker:
     build:
       context: ./services/auth-service
+      
+    restart: unless-stopped
+
+    env_file:
+      - ./services/auth-service/.env
 
     command: celery -A app.core.celery_app.celery_app worker --loglevel=info
 
