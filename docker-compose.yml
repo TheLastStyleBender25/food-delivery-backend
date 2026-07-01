@@ -1,0 +1,55 @@
+services:
+
+  postgres:
+    image: postgres:17
+
+    environment:
+      POSTGRES_DB: auth_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  
+  redis:
+    image: redis:8-alpine
+
+    ports:
+      - "6379:6379"
+
+  rabbitmq:
+    image: rabbitmq:3.13-management
+
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  auth-service:
+    build:
+      context: ./services/auth-service
+
+    env_file:
+    - ./services/auth-service/.env
+
+    ports:
+      - "8000:8000"
+    
+
+    depends_on:
+      - postgres
+
+  celery-worker:
+    build:
+      context: ./services/auth-service
+
+    command: celery -A app.core.celery_app.celery_app worker --loglevel=info
+
+    depends_on:
+      - rabbitmq
+      - redis
+
+volumes:
+  postgres_data:
