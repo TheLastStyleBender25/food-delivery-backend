@@ -27,7 +27,6 @@ class AuthService:
         try:
             verification = create_email_verification_token(user.id)
             verification_link = (f"{settings.BASE_URL}/auth/verify-email?token={verification}")
-            print(f"link is {verification_link}")
             send_verification_email.delay(request.email, verification_link)
         except Exception:
             raise CeleryTaskException()
