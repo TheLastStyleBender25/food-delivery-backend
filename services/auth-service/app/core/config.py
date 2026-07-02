@@ -31,6 +31,9 @@ class Settings(BaseSettings):  # Inherits BaseSettings — auto-reads values fro
 
     OTP_EXPIRATION_SECONDS:int
 
+    RESEND_API_KEY: str
+    EMAIL_FROM: str
+
     model_config = SettingsConfigDict(
         env_file=ENV_FILE,  # Tells pydantic to load values from a .env file
         extra="ignore"  # Silently ignores any extra variables in .env not defined above
