@@ -80,5 +80,21 @@ services:
     depends_on:
       - auth-service
 
+  restaurant-service:
+    build:
+      context: ./services/restaurant-service
+
+    restart: unless-stopped
+
+    env_file:
+        - ./services/restaurant-service/.env
+
+    ports:
+        - "8001:8000"
+
+    depends_on:
+      - postgres
+      - redis
+
 volumes:
   postgres_data:
