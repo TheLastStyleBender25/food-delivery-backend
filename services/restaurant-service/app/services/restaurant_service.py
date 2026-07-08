@@ -77,3 +77,11 @@ class RestaurantService:
         if restaurant.owner_id != current_user.sub:
             raise InvalidRestaurant()
         return RestaurantRepository.update_restaurant_status(db, restaurant, data.status)
+
+
+    @staticmethod
+    def get_restaurant_internal(db:Session, restaurant_id: UUID):
+        restaurant = RestaurantRepository.get_by_id(db, restaurant_id)
+        if restaurant is None:
+            raise RestaurantNotFound()
+        return restaurant
