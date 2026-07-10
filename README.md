@@ -251,19 +251,19 @@ alembic upgrade head
 Auth Service
 
 ```
-http://localhost:8000/docs
+https://auth.frostbite.co.in/docs
 ```
 
 Restaurant Service
 
 ```
-http://localhost:8001/docs
+https://restaurant.frostbite.co.in/docs
 ```
 
 Menu Service
 
 ```
-http://localhost:8002/docs
+https://menu.frostbite.co.in/docs
 ```
 
 ---
