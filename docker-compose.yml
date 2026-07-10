@@ -86,6 +86,7 @@ services:
     depends_on:
       - auth-service
       - restaurant-service
+      - menu-service
 
   restaurant-service:
     build:
@@ -98,6 +99,25 @@ services:
 
     ports:
         - "8001:8000"
+
+    depends_on:
+      - postgres
+      - redis
+
+  menu-service:
+    build:
+      context: ./services/menu-service
+
+    restart: unless-stopped
+
+    env_file:
+      - ./services/menu-service/.env
+
+    ports:
+      - "8002:8000"
+
+    volumes:
+      - ./services/menu-service/uploads:/app/uploads
 
     depends_on:
       - postgres
