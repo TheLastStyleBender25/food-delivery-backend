@@ -83,6 +83,10 @@ services:
       - /etc/letsencrypt/live/restaurant.frostbite.co.in/fullchain.pem:/etc/nginx/certs/restaurant_fullchain.pem:ro
       - /etc/letsencrypt/live/restaurant.frostbite.co.in/privkey.pem:/etc/nginx/certs/restaurant_privkey.pem:ro
 
+      # Menu SSL
+      - /etc/letsencrypt/live/menu.frostbite.co.in/fullchain.pem:/etc/nginx/certs/menu_fullchain.pem:ro
+      - /etc/letsencrypt/live/menu.frostbite.co.in/privkey.pem:/etc/nginx/certs/menu_privkey.pem:ro
+
     depends_on:
       - auth-service
       - restaurant-service
