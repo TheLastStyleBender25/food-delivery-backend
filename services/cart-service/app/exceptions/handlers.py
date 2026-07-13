@@ -1,0 +1,39 @@
+from fastapi import  Request
+from fastapi.responses import JSONResponse
+from starlette import status
+from app.core.logger import logger
+from app.exceptions.all_exceptions import RateLimitExceededException, MenuItemNotFoundException, ForbiddenException, \
+    MenuServiceUnavailableException, RequestTimeoutException, DifferentRestaurantException, CartItemNotFoundException
+
+
+
+async def RateLimitExceededExceptionHandler(request:Request, ex:RateLimitExceededException):
+    logger.exception(f"Rate limit exceeded: {request.url}", exc_info=ex)
+    return JSONResponse(status_code=status.HTTP_403_FORBIDDEN,content= "Rate limit exceeded")
+
+async def MenuItemNotFoundExceptionHandler(request:Request, ex:MenuItemNotFoundException):
+    logger.exception(f"Item is not found: {request.url}", exc_info=ex)
+    return JSONResponse(status_code=status.HTTP_404_NOT_FOUND,content= "Item not found")
+
+async def ForbiddenExceptionHandler(request:Request, ex:ForbiddenException):
+    logger.exception(f"Not Allowed: {request.url}", exc_info=ex)
+    return JSONResponse(status_code=status.HTTP_404_NOT_FOUND,content= "Not Allowed")
+
+async def MenuServiceUnavailableExceptionHandler(request:Request, ex:MenuServiceUnavailableException):
+    logger.exception(f"Service Unavailable: {request.url}", exc_info=ex)
+    return JSONResponse(status_code=status.HTTP_503_SERVICE_UNAVAILABLE,content= "Service Unavailable")
+
+async def RequestTimeoutExceptionHandler(request:Request, ex:RequestTimeoutException):
+    logger.exception(f"Request Timeout: {request.url}", exc_info=ex)
+    return JSONResponse(status_code=status.HTTP_408_REQUEST_TIMEOUT,content= "Request Timeout")
+
+async def DifferentRestaurantExceptionHandler(request:Request, ex:DifferentRestaurantException):
+    logger.exception(f"Different restaurant: {request.url}", exc_info=ex)
+    return JSONResponse(status_code=status.HTTP_401_UNAUTHORIZED,content= "Different restaurant")
+
+
+async def CartItemNotFoundExceptionHandler(request:Request, ex:CartItemNotFoundException):
+    logger.exception(f"Not found: {request.url}", exc_info=ex)
+    return JSONResponse(status_code=status.HTTP_404_NOT_FOUND,content= "Not found")
+
+

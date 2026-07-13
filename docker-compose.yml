@@ -127,5 +127,22 @@ services:
       - postgres
       - redis
 
+  cart-service:
+    build:
+      context: ./services/cart-service
+
+    restart: unless-stopped
+
+    env_file:
+      - ./services/cart-service/.env
+
+    ports:
+      - "8003:8000"
+
+    depends_on:
+      - postgres
+      - redis
+
+
 volumes:
   postgres_data:
