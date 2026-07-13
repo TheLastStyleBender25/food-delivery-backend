@@ -10,6 +10,7 @@ from app.clients.restaurant_client import RestaurantClient
 from app.core.redis_component import redis_client
 import json
 from app.services.file_storage_service import FileStorageService
+from app.schemas.internal import InternalMenuItemResponse
 
 
 
@@ -140,6 +141,15 @@ class MenuService:
 
     async def delete_menu_image(self, image_url: str):
         await self.file_storage.delete_menu_image(image_url)
+
+
+    async def get_menu_item_internal(self, db:AsyncSession, menu_item_id:UUID):
+        menu_item = await self.repo.get_by_id(db,menu_item_id)
+        if menu_item is None:
+            raise MenuItemNotFoundException()
+        response = InternalMenuItemResponse.model_validate(menu_item)
+        return response
+
 
 
     def checker_for_user(self, user, val):
