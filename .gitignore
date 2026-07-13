@@ -28,3 +28,6 @@ rabbitmq_data/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Uploads
+services/menu-service/uploads/
