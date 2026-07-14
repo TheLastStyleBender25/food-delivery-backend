@@ -1,6 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 import json
 from app.schemas.cart_schema import CartItemCreate, CartResponse, CartItemResponse, CartItemUpdate
+from app.schemas.internal import InternalCartResponse, InternalCartItemResponse
 from app.repositories.cart_repository import CartRepository
 from app.schemas.token_payload import TokenPayload
 from app.clients.menu_client import MenuClient
