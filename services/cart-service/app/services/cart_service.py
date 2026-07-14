@@ -88,7 +88,7 @@ class CartService:
 
         return CartItemResponse.model_validate(cart_item)
 
-    async def get_internal_cart(db: AsyncSession,customer_id: UUID):
+    async def get_internal_cart(self, db: AsyncSession,customer_id: UUID):
         cart_items = await self.cart_repository.get_customer_cart(db,customer_id)
 
         subtotal = Decimal("0.00")
@@ -107,7 +107,7 @@ class CartService:
 
             return InternalCartResponse(items=items,subtotal=subtotal)
 
-    async def clear_internal_cart(db: AsyncSession,customer_id: UUID):
+    async def clear_internal_cart(self,db: AsyncSession,customer_id: UUID):
         await self.cart_repository.clear_cart(db,customer_id)
         await db.commit()
 
