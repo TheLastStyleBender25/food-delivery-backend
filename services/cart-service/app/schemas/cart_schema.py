@@ -10,7 +10,6 @@ class CartItemBase(BaseModel):
 class CartItemCreate(CartItemBase):
     menu_item_id: UUID
 
-
 class CartItemUpdate(BaseModel):
     pass
 

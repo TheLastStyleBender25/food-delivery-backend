@@ -1,7 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 import json
 from app.schemas.cart_schema import CartItemCreate, CartResponse, CartItemResponse, CartItemUpdate
-from app.dependencies.auth import get_current_user
 from app.repositories.cart_repository import CartRepository
 from app.schemas.token_payload import TokenPayload
 from app.clients.menu_client import MenuClient
@@ -88,6 +87,32 @@ class CartService:
         await db.refresh(cart_item)
 
         return CartItemResponse.model_validate(cart_item)
+
+    async def get_internal_cart(db: AsyncSession,customer_id: UUID):
+        cart_items = await self.cart_repository.get_customer_cart(db,customer_id)
+
+        subtotal = Decimal("0.00")
+        items = []
+        for item in cart_items:
+            subtotal += item.price_at_addition * item.quantity
+
+            items.append(
+                InternalCartItemResponse(
+                    restaurant_id=item.restaurant_id,
+                    menu_item_id=item.menu_item_id,
+                    quantity=item.quantity,
+                    price_at_addition=item.price_at_addition,
+                )
+            )
+
+            return InternalCartResponse(items=items,subtotal=subtotal)
+
+    async def clear_internal_cart(db: AsyncSession,customer_id: UUID):
+        await self.cart_repository.clear_cart(db,customer_id)
+        await db.commit()
+
+        return {"Cart cleared successfully"}
+
 
 
 

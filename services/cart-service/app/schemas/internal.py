@@ -9,3 +9,15 @@ class InternalMenuItemResponse(BaseModel):
     name: str
     price: Decimal
     is_available: bool
+
+
+class InternalCartItemResponse(BaseModel):
+    restaurant_id: UUID
+    menu_item_id: UUID
+    quantity: int
+    price_at_addition: Decimal
+
+
+class InternalCartResponse(BaseModel):
+    items: list[InternalCartItemResponse]
+    subtotal: Decimal

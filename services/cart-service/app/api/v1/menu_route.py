@@ -7,6 +7,7 @@ from app.schemas.token_payload import TokenPayload
 from uuid import UUID
 from app.services.cart_service import CartService
 from app.schemas.cart_schema import CartItemResponse, CartResponse, CartItemCreate, CartItemUpdate
+from app.schemas.internal import InternalCartItemResponse, InternalCartResponse
 
 
 router = APIRouter(prefix="/cart", tags=["Cart Menu"])
@@ -35,3 +36,15 @@ async def remove_item(menu_item_id: UUID,db: AsyncSession = Depends(get_db),curr
 @router.delete("/delete")
 async def clear_cart(db: AsyncSession = Depends(get_db),current_user: TokenPayload = Depends(get_current_user), _: None = Depends(rate_limit(10, 60))):
     await service.clear_cart(db=db,current_user=current_user)
+
+
+
+@router.get("/internal/cart/{customer_id}",response_model=InternalCartResponse)
+async def get_internal_cart(customer_id: UUID,db: AsyncSession = Depends(get_db)):
+    return await service.get_internal_cart(db, customer_id)
+
+@router.delete("/internal/cart/{customer_id}")
+async def clear_internal_cart(customer_id: UUID,db: AsyncSession = Depends(get_db)):
+    return await service.clear_internal_cart(db, customer_id)
+
+
