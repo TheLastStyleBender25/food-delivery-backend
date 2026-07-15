@@ -19,3 +19,6 @@ class DifferentRestaurantException(Exception):
 class CartItemNotFoundException(Exception):
     pass
 
+class CartNotFoundException(Exception):
+    pass
+

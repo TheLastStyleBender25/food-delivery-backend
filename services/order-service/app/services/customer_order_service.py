@@ -15,7 +15,7 @@ from app.client.cart_client import CartClient
 from app.client.menu_client import MenuClient
 from pydantic import TypeAdapter
 from app.core.redis_component import redis_client
-from app.exceptions.all_exceptions import ForbiddenException, CartItemNotFoundException, OrderNotFoundException, CannotCancelOrderException
+from app.exceptions.all_exceptions import ForbiddenException, CartItemNotFoundException, OrderNotFoundException, CannotCancelOrderException, MenuItemNotFoundException
 
 
 class CustomerOrderService:
@@ -40,7 +40,7 @@ class CustomerOrderService:
         for item in cart.items:
             menu_item = await self.menu_client.get_menu_item(item.menu_item_id)
             if not menu_item.is_available:
-                raise ForbiddenException()
+                raise MenuItemNotFoundException()
             order_item = OrderItem(order_id=order.id,menu_item_id=menu_item.id,name=menu_item.name,quantity=item.quantity,price_at_order=item.price_at_addition)
 
             await self.order_item_repo.create(db, order_item)

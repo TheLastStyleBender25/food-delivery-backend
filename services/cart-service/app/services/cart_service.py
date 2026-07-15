@@ -91,22 +91,17 @@ class CartService:
 
     async def get_internal_cart(self, db: AsyncSession,customer_id: UUID):
         cart_items = await self.repo.get_customer_cart(db,customer_id)
+        if not cart_items:
+            raise CartNotFoundException()
 
         subtotal = Decimal("0.00")
         items = []
         for item in cart_items:
             subtotal += item.price_at_addition * item.quantity
 
-            items.append(
-                InternalCartItemResponse(
-                    restaurant_id=item.restaurant_id,
-                    menu_item_id=item.menu_item_id,
-                    quantity=item.quantity,
-                    price_at_addition=item.price_at_addition,
-                )
-            )
+            items.append(InternalCartItemResponse(restaurant_id=item.restaurant_id,menu_item_id=item.menu_item_id, quantity=item.quantity, price_at_addition=item.price_at_addition))
 
-            return InternalCartResponse(items=items,subtotal=subtotal)
+        return InternalCartResponse(items=items,subtotal=subtotal)
 
     async def clear_internal_cart(self,db: AsyncSession,customer_id: UUID):
         await self.repo.clear_cart(db,customer_id)

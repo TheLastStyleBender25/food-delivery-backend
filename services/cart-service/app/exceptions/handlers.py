@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from starlette import status
 from app.core.logger import logger
 from app.exceptions.all_exceptions import RateLimitExceededException, MenuItemNotFoundException, ForbiddenException, \
-    MenuServiceUnavailableException, RequestTimeoutException, DifferentRestaurantException, CartItemNotFoundException
+    MenuServiceUnavailableException, RequestTimeoutException, DifferentRestaurantException, CartItemNotFoundException, CartNotFoundException
 
 
 
@@ -33,6 +33,10 @@ async def DifferentRestaurantExceptionHandler(request:Request, ex:DifferentResta
 
 
 async def CartItemNotFoundExceptionHandler(request:Request, ex:CartItemNotFoundException):
+    logger.exception(f"Not found: {request.url}", exc_info=ex)
+    return JSONResponse(status_code=status.HTTP_404_NOT_FOUND,content= "Not found")
+
+async def CartNotFoundExceptionHandler(request:Request, ex:CartNotFoundException):
     logger.exception(f"Not found: {request.url}", exc_info=ex)
     return JSONResponse(status_code=status.HTTP_404_NOT_FOUND,content= "Not found")
 

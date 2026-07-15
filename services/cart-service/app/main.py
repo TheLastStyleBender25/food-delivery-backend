@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from app.core.config import settings
-from app.exceptions.all_exceptions import RateLimitExceededException, MenuItemNotFoundException, ForbiddenException, MenuServiceUnavailableException, RequestTimeoutException, DifferentRestaurantException, CartItemNotFoundException
-from app.exceptions.handlers import RateLimitExceededExceptionHandler, MenuItemNotFoundExceptionHandler, ForbiddenExceptionHandler, MenuServiceUnavailableExceptionHandler, RequestTimeoutExceptionHandler, DifferentRestaurantExceptionHandler, CartItemNotFoundExceptionHandler
+from app.exceptions.all_exceptions import RateLimitExceededException, MenuItemNotFoundException, ForbiddenException, MenuServiceUnavailableException, RequestTimeoutException, DifferentRestaurantException, CartItemNotFoundException, CartNotFoundException
+from app.exceptions.handlers import RateLimitExceededExceptionHandler, MenuItemNotFoundExceptionHandler, ForbiddenExceptionHandler, MenuServiceUnavailableExceptionHandler, RequestTimeoutExceptionHandler, DifferentRestaurantExceptionHandler, CartItemNotFoundExceptionHandler, CartNotFoundExceptionHandler
 from app.api.v1.menu_route import router as menu_router
 
 
@@ -16,6 +16,7 @@ app.add_exception_handler(MenuServiceUnavailableException, MenuServiceUnavailabl
 app.add_exception_handler(RequestTimeoutException, RequestTimeoutExceptionHandler)
 app.add_exception_handler(DifferentRestaurantException, DifferentRestaurantExceptionHandler)
 app.add_exception_handler(CartItemNotFoundException, CartItemNotFoundExceptionHandler)
+app.add_exception_handler(CartNotFoundException, CartNotFoundExceptionHandler)
 
 
 app.router.include_router(menu_router)
