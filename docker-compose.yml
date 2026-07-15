@@ -91,6 +91,10 @@ services:
       - /etc/letsencrypt/live/cart.frostbite.co.in/fullchain.pem:/etc/nginx/certs/cart_fullchain.pem:ro
       - /etc/letsencrypt/live/cart.frostbite.co.in/privkey.pem:/etc/nginx/certs/cart_privkey.pem:ro
 
+      # Order SSL
+      - /etc/letsencrypt/live/order.frostbite.co.in/fullchain.pem:/etc/nginx/certs/order_fullchain.pem:ro
+      - /etc/letsencrypt/live/order.frostbite.co.in/privkey.pem:/etc/nginx/certs/order_privkey.pem:ro
+
     depends_on:
       - auth-service
       - restaurant-service
