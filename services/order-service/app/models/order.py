@@ -19,7 +19,7 @@ class Order(Base):
     customer_id:Mapped[UUID]=mapped_column(UUID(as_uuid=True), index=True, nullable=False)
     restaurant_id:Mapped[UUID]=mapped_column(UUID(as_uuid=True), index=True, nullable=False)
     total_amount:Mapped[Decimal] = mapped_column(Numeric(10,2), nullable=False)
-    status:Mapped[OrderStatus]=mapped_column(Enum(OrderStatus), default=OrderStatus.PLACED, nullable=False)
+    status:Mapped[OrderStatus]=mapped_column(Enum(OrderStatus, name="orderstatus"), default=OrderStatus.PLACED, nullable=False)
     created_at:Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     updated_at:Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
     items:Mapped[list["OrderItem"]] = relationship(back_populates="order", cascade="all, delete-orphan")
