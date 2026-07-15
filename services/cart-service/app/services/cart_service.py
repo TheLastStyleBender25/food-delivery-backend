@@ -8,7 +8,7 @@ from app.clients.menu_client import MenuClient
 from app.models.cart_item import CartItem
 from decimal import Decimal
 from uuid import UUID
-from app.exceptions.all_exceptions import ForbiddenException, MenuItemNotFoundException, DifferentRestaurantException, CartItemNotFoundException
+from app.exceptions.all_exceptions import ForbiddenException, MenuItemNotFoundException, DifferentRestaurantException, CartItemNotFoundException, CartNotFoundException
 
 
 class CartService:
